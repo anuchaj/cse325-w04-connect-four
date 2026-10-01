@@ -3,11 +3,17 @@
 
 <HeadContent>
     <style>
-        :root {
-            --board-bg: @ColorTranslator.ToHtml(BoardColor);
-            --player1: @ColorTranslator.ToHtml(Player1Color);
-            --player2: @ColorTranslator.ToHtml(Player2Color);
-        }
+            :root {
+                --board-bg:
+                    @ColorTranslator.ToHtml(BoardColor)
+                ;
+                --player1:
+                    @ColorTranslator.ToHtml(Player1Color)
+                ;
+                --player2:
+                    @ColorTranslator.ToHtml(Player2Color)
+                ;
+            }
     </style>
 </HeadContent>
 
@@ -42,10 +48,8 @@
             @for (byte col = 0; col < 7; col++)
             {
                 var selectedColumn = col;
-                <button class="drop-button"
-                        title="Drop a piece in column @(selectedColumn + 1)"
-                        disabled="@State.IsGameOver"
-                        @onclick="() => PlayPiece(selectedColumn)">
+                <button class="drop-button" title="Drop a piece in column @(selectedColumn + 1)"
+                        disabled="@State.IsGameOver" @onclick="() => PlayPiece(selectedColumn)">
                     ↓
                 </button>
             }
@@ -86,7 +90,6 @@
                 @foreach (var move in State.Moves)
                 {
                     <li>
-                        <span class="move-number">@move.Number</span>
                         <span>Player @move.Player → Column @move.Column</span>
                     </li>
                 }

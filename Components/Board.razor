@@ -1,0 +1,138 @@
+@using System.Drawing
+@inject ConnectFourBlazor.Services.GameState State
+
+<HeadContent>
+    <style>
+        :root {
+            --board-bg: @ColorTranslator.ToHtml(BoardColor);
+            --player1: @ColorTranslator.ToHtml(Player1Color);
+            --player2: @ColorTranslator.ToHtml(Player2Color);
+        }
+    </style>
+</HeadContent>
+
+<section class="game-layout">
+    <div class="game-panel">
+        <div class="status-row">
+            <div>
+                @if (State.IsGameOver)
+                {
+                    <strong class="winner">@State.StatusMessage</strong>
+                }
+                else
+                {
+                    <strong>Player @State.CurrentPlayer's turn</strong>
+                }
+            </div>
+
+            @if (State.IsGameOver)
+            {
+                <button class="reset-button" @onclick="ResetGame">
+                    Play Again
+                </button>
+            }
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(State.ErrorMessage))
+        {
+            <div class="error-message" role="alert">@State.ErrorMessage</div>
+        }
+
+        <nav class="column-controls" aria-label="Choose a column">
+            @for (byte col = 0; col < 7; col++)
+            {
+                var selectedColumn = col;
+                <button class="drop-button"
+                        title="Drop a piece in column @(selectedColumn + 1)"
+                        disabled="@State.IsGameOver"
+                        @onclick="() => PlayPiece(selectedColumn)">
+                    ↓
+                </button>
+            }
+        </nav>
+
+        <div class="board" aria-label="Connect Four board">
+            @for (var i = 0; i < 42; i++)
+            {
+                var cell = i;
+                <span class="container">
+                    <span class="@GetPieceClass(cell)" aria-label="@GetCellLabel(cell)"></span>
+                </span>
+            }
+        </div>
+
+        <div class="legend">
+            <span><i class="legend-piece player-one"></i> Player 1</span>
+            <span><i class="legend-piece player-two"></i> Player 2</span>
+        </div>
+    </div>
+
+    <aside class="history-panel" aria-label="Move history">
+        <div class="history-heading">
+            <div>
+                <p class="eyebrow">Extra feature</p>
+                <h3>Move History</h3>
+            </div>
+            <span class="move-count">@State.Moves.Count</span>
+        </div>
+
+        @if (State.Moves.Count == 0)
+        {
+            <p class="empty-history">No moves yet. Choose a column to start.</p>
+        }
+        else
+        {
+            <ol class="move-list">
+                @foreach (var move in State.Moves)
+                {
+                    <li>
+                        <span class="move-number">@move.Number</span>
+                        <span>Player @move.Player → Column @move.Column</span>
+                    </li>
+                }
+            </ol>
+        }
+    </aside>
+</section>
+
+@code {
+    [Parameter]
+    public Color BoardColor { get; set; } = Color.FromArgb(30, 64, 175);
+
+    [Parameter]
+    public Color Player1Color { get; set; } = Color.FromArgb(239, 68, 68);
+
+    [Parameter]
+    public Color Player2Color { get; set; } = Color.FromArgb(250, 204, 21);
+
+    private void PlayPiece(byte col)
+    {
+        State.PlayPiece(col);
+    }
+
+    private void ResetGame()
+    {
+        State.ResetBoard();
+    }
+
+    private string GetPieceClass(int cell)
+    {
+        return State.GetPiece(cell) switch
+        {
+            1 => "player1",
+            2 => "player2",
+            _ => ""
+        };
+    }
+
+    private string GetCellLabel(int cell)
+    {
+        var value = State.GetPiece(cell);
+        return value switch
+        {
+            1 => "Player 1 piece",
+            2 => "Player 2 piece",
+            _ => "Empty cell"
+        };
+    }
+}

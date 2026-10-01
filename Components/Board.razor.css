@@ -1,0 +1,233 @@
+section.game-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.game-panel,
+.history-panel {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.12);
+}
+
+.game-panel {
+    padding: 1.25rem;
+}
+
+.history-panel {
+    padding: 1.25rem;
+    position: sticky;
+    top: 1rem;
+}
+
+.status-row {
+    min-height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.winner {
+    font-size: 1.2rem;
+}
+
+.reset-button,
+.drop-button {
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.reset-button {
+    padding: .7rem 1rem;
+    background: #111827;
+    color: white;
+}
+
+.reset-button:hover {
+    opacity: .9;
+}
+
+.error-message {
+    margin: .5rem 0 1rem;
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.column-controls {
+    width: min(100%, 520px);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .25rem;
+    margin: .25rem auto 0;
+}
+
+.drop-button {
+    font-size: 1.4rem;
+    padding: .25rem;
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.drop-button:hover:not(:disabled) {
+    background: #d1d5db;
+}
+
+.drop-button:disabled {
+    cursor: not-allowed;
+    opacity: .45;
+}
+
+.board {
+    margin: .15rem auto 0;
+    width: min(100%, 520px);
+    aspect-ratio: 7 / 6;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    background: var(--board-bg);
+    border: 10px solid var(--board-bg);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    background: var(--board-bg);
+}
+
+.container::before {
+    content: "";
+    width: 72%;
+    height: 72%;
+    border-radius: 50%;
+    background: #f8fafc;
+    box-shadow: inset 0 2px 5px rgba(15, 23, 42, .18);
+}
+
+.container span {
+    position: absolute;
+    width: 72%;
+    height: 72%;
+    border-radius: 50%;
+    z-index: 1;
+    transition: transform .15s ease;
+}
+
+.player1 {
+    background: var(--player1);
+    box-shadow: inset 0 2px 5px rgba(255,255,255,.45),
+                0 2px 4px rgba(0,0,0,.2);
+}
+
+.player2 {
+    background: var(--player2);
+    box-shadow: inset 0 2px 5px rgba(255,255,255,.45),
+                0 2px 4px rgba(0,0,0,.2);
+}
+
+.legend {
+    width: min(100%, 520px);
+    margin: .9rem auto 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: .9rem;
+}
+
+.legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.legend-piece {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-piece.player-one {
+    background: var(--player1);
+}
+
+.legend-piece.player-two {
+    background: var(--player2);
+}
+
+.history-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+}
+
+.history-heading h3 {
+    margin: .15rem 0 0;
+}
+
+.move-count {
+    min-width: 34px;
+    padding: .3rem .55rem;
+    border-radius: 999px;
+    text-align: center;
+    background: #e5e7eb;
+    font-weight: 700;
+}
+
+.empty-history {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.move-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: grid;
+    gap: .55rem;
+}
+
+.move-list li {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .6rem .7rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    font-size: .9rem;
+}
+
+.move-number {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #e5e7eb;
+    font-size: .75rem;
+    font-weight: 700;
+    flex: 0 0 auto;
+}
+
+@media (max-width: 800px) {
+    section.game-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .history-panel {
+        position: static;
+    }
+}

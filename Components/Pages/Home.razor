@@ -1,0 +1,20 @@
+@page "/"
+@using System.Drawing
+@rendermode InteractiveServer
+
+<PageTitle>Connect Four</PageTitle>
+
+<div class="intro">
+    <div>
+        <p class="eyebrow">Two-player game</p>
+        <h2>Drop four pieces in a row.</h2>
+        <p class="lead">
+            Players take turns choosing a column. The first player to connect
+            four pieces horizontally, vertically, or diagonally wins.
+        </p>
+    </div>
+</div>
+
+<Board BoardColor="Color.FromArgb(30, 64, 175)"
+       Player1Color="Color.FromArgb(239, 68, 68)"
+       Player2Color="Color.FromArgb(250, 204, 21)" />
